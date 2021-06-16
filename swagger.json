@@ -30,10 +30,12 @@
                 "schema": {
                   "properties": {
                     "title": {
-                      "type": "string"
+                      "type": "string",
+                      "required": true
                     },
                     "author": {
-                      "type": "string"
+                      "type": "string",
+                      "required": true
                     }
                   }
                 }
@@ -132,33 +134,37 @@
     },"definitions": {
         "Book": {
           "properties": {
-            "_id": {
-              "type": "string",
-              "uniqueItems": true
-            },
-            "title": {
-              "type": "string"
-            },
-            "author": {
-              "type": "string"
-            },
             "pages": {
               "type": "array",
               "items": {
                 "type": "object",
                 "properties": {
                   "content": {
-                    "type": "string"
+                    "type": "string",
+                    "required": true
                   }
                 }
               }
+            },
+            "_id": {
+              "type": "string",
+              "uniqueItems": true
+            },
+            "title": {
+              "type": "string",
+              "required": true
+            },
+            "author": {
+              "type": "string",
+              "required": true
             }
           }
         },
         "Page": {
           "properties": {
             "content" : {
-              "type":"string"
+              "type":"string",
+              "required": true
             }
           }
         }

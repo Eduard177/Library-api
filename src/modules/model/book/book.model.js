@@ -2,10 +2,12 @@ const mongoose = require('mongoose');
 
 const bookSchema = new mongoose.Schema({
     title:{
-        type: String
+        type: String,
+        required: true
     },
     author: {
-        type: String
+        type: String,
+        required: true
     },
     pages: [{
         type: mongoose.Schema.Types.ObjectId,

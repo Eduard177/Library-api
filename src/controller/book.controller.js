@@ -8,21 +8,20 @@ module.exports = {
       const data = await Book.find().populate('pages', "-_id -__v");
       res.status(200).send(data)
     } catch (error) {
-      next(error)
+      res.send({message: error.message})
     }
   },
   async getBookById(req, res, next) {
     try {
-      const bookId = req.params.bookId;
-      if(bookId){
-        const book = await Book.findById(bookId).populate('pages', "-_id -__v");
-        res.status(200).send(book)
-      }
-      else{
+      const {bookId} = req.params;
+      if(!bookId){
         res.status(404).send({message: "Not found Book"});
       }
+      const book = await Book.findById(bookId).populate('pages', "-_id -__v");
+      res.status(200).send(book)
+
     } catch (error) {
-      next(error)
+      res.send({message: error.message})
     }
   },
   async createBook(req, res, next) {
@@ -31,16 +30,14 @@ module.exports = {
       const newBook = await Book.create(book)
       res.status(201).send(newBook)
     } catch(error){
-      next(error)
+      res.send({message: error.message})
     }
   },
   async addNewPage(req, res, next){
     try{
-      const bookId = req.params.bookId
-      const page = new Page({
-        page: req.body.page,
-        content: req.body.content
-      });
+      const {bookId} = req.params;
+      const {content} = req.body;
+      const page = new Page({content});
 
       await page.save();
 
@@ -53,27 +50,25 @@ module.exports = {
       res.send(newPage)
 
     } catch(error){
-      next(error)
+      res.send({message: error.message})
     }
   },
   async getBookPage(req, res, next){
     try {
-      const bookId = req.params.bookId;
-      const pageNumber = req.params.pageNumber -1;
+      let {bookId, pageNumber} = req.params
+      pageNumber--
 
-      if(bookId){
-        const book = await Book.findById(bookId).populate('pages', '-_id');
-        if(pageNumber < book.pages.length){
-          res.send(book.pages[pageNumber])
-        }
-        else{
-          res.status(404).send({message: "Not found Page"});
-        }
-      }else{
-        res.status(404).send({message: "Not found Book"});
+      if(!bookId){
+        res.status(403).send({message: "bookId need to be send"});
       }
+
+      const book = await Book.findById(bookId).populate('pages', '-_id');
+      if(!pageNumber > book.pages.length){
+        res.status(404).send({message: "Not found Page"});
+      }
+      res.send(book.pages[pageNumber]);
     } catch (error) {
-      next(error)
+      res.send({message: error.message})
     }
   }
 }

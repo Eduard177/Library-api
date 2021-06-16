@@ -3,7 +3,8 @@ const mongoose = require('mongoose');
 const pageSchema = new mongoose.Schema({
     content: [
         {
-            type: String
+            type: String,
+            required: true
         }
     ],
 })
