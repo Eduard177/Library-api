@@ -10,7 +10,7 @@
       }
     },
     "host": "localhost:3000",
-    "basePath": "/",
+    "basePath": "/api/book",
     "tags": [
       {
         "name": "Books",
@@ -21,13 +21,110 @@
         "/create": {
           "post": {
             "tags": ["Books"],
-            "summary": "Create book in system",
+            "summary": "Create book",
+            "parameters": [
+              {
+                "name": "bookId",
+                "in": "body",
+                "description": "Book that we want to get",
+                "schema": {
+                  "properties": {
+                    "title": {
+                      "type": "string"
+                    },
+                    "author": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            ],
             "responses": {
               "201": {
-                "description": "Created",
+                "description": "Created the book",
                 "schema": {
                   "$ref": "#/definitions/Book"
                 }
+              }
+            }
+          }
+        },
+        "/all": {
+          "get": {
+            "tags": ["Books"],
+            "summary": "Get all books",
+            "responses": {
+              "200": {
+                "description": "Get All"
+              }
+            }
+          }
+        },
+        "/{bookId}": {
+          "get": {
+            "tags": ["Books"],
+            "summary": "Get book by Id",
+            "parameters": [
+              {
+                "name": "bookId",
+                "in": "path",
+                "description": "Book that we want to get"
+              }
+            ],
+            "responses": {
+              "200": {
+                "description": "Get Book"
+              }
+            }
+          }
+        },
+        "/create/page/{bookId}": {
+          "post": {
+            "tags": ["Books"],
+            "summary": "Add page in book",
+            "parameters": [
+              {
+                "name": "bookId",
+                "in": "path",
+                "description": "Search book to add page" 
+              },
+              {
+                "name": "content",
+                "in": "body",
+                "description": "Content in the page",
+                "schema": {
+                  "$ref": "#/definitions/Page"
+                }
+              }
+            ],
+
+            "responses": {
+              "201": {
+                "description": "Create Page in the book"
+              }
+            }
+          }
+        },
+        "/{bookId}/page/{pageNumber}": {
+          "get": {
+            "tags": ["Books"],
+            "summary": "Get page in the book",
+            "parameters": [
+              {
+                "name": "bookId",
+                "in": "path",
+                "description": "Search book to search page" 
+              },
+              {
+                "name": "pageNumber",
+                "in": "path",
+                "description": "Search page"
+              }
+            ],
+
+            "responses": {
+              "200": {
+                "description": "Create Page in the book"
               }
             }
           }
@@ -36,7 +133,7 @@
         "Book": {
           "properties": {
             "_id": {
-              "type": "object",
+              "type": "string",
               "uniqueItems": true
             },
             "title": {
@@ -51,22 +148,19 @@
                 "type": "object",
                 "properties": {
                   "content": {
-                    "type": "array",
-                    "items": {
-                        "type": "object",
-                        "properties": {
-                            "type": "string"
-                        }
-                    }
+                    "type": "string"
                   }
                 }
               }
             }
           }
         },
-        "Users": {
-          "type": "array",
-          "$ref": "#/definitions/User"
+        "Page": {
+          "properties": {
+            "content" : {
+              "type":"string"
+            }
+          }
         }
       },
     "schemes": ["http"],
