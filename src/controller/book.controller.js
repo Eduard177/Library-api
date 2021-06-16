@@ -63,12 +63,14 @@ module.exports = {
 
       if(bookId){
         const book = await Book.findById(bookId).populate('pages', '-_id');
-        if(pageNumber < book.pages.lenght){
+        if(pageNumber < book.pages.length){
           res.send(book.pages[pageNumber])
         }
         else{
           res.status(404).send({message: "Not found Page"});
         }
+      }else{
+        res.status(404).send({message: "Not found Book"});
       }
     } catch (error) {
       next(error)
