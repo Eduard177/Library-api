@@ -1,0 +1,75 @@
+{
+    "swagger": "2.0",
+    "info": {
+      "version": "1.0.0",
+      "title": "Library Api",
+      "description": "It is a Rest api for reading books.",
+      "license": {
+        "name": "MIT",
+        "url": "https://opensource.org/licenses/MIT"
+      }
+    },
+    "host": "localhost:3000",
+    "basePath": "/",
+    "tags": [
+      {
+        "name": "Books",
+        "description": "API for books in the system"
+      }
+    ],
+    "paths": {
+        "/create": {
+          "post": {
+            "tags": ["Books"],
+            "summary": "Create book in system",
+            "responses": {
+              "201": {
+                "description": "Created",
+                "schema": {
+                  "$ref": "#/definitions/Book"
+                }
+              }
+            }
+          }
+        }
+    },"definitions": {
+        "Book": {
+          "properties": {
+            "_id": {
+              "type": "object",
+              "uniqueItems": true
+            },
+            "title": {
+              "type": "string"
+            },
+            "author": {
+              "type": "string"
+            },
+            "pages": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "content": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "type": "string"
+                        }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "Users": {
+          "type": "array",
+          "$ref": "#/definitions/User"
+        }
+      },
+    "schemes": ["http"],
+    "consumes": ["application/json"],
+    "produces": ["application/json"]
+}
