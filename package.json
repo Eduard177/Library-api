@@ -6,6 +6,7 @@
   "scripts": {
     "start": "node index.js",
     "start:dev": "nodemon index.js",
+    "start:seed": "node src/seeders/bookSeed.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Eduard Pichardo Rochet",
@@ -14,6 +15,7 @@
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
+    "faker": "^5.5.3",
     "mongoose": "^5.12.13",
     "swagger-ui-express": "^4.1.6"
   },
