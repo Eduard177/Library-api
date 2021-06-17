@@ -25,6 +25,8 @@ app.listen(process.env.PORT || 3000, ()=>{
     console.log(`Escuchando puerto `,process.env.PORT || 3000)
 })
 
+swaggerDocument.host = process.env.SWAGGER_HOST || "localhost:3000"
+
 app.use(
   '/api-docs',
   swaggerUi.serve, 

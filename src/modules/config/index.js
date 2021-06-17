@@ -17,6 +17,7 @@ class ConfigService {
     } else {
       this.envConfig = {
         MONGO_URI: process.env.MONGO_URI,
+        SWAGGER_HOST: process.env.SWAGGER_HOST
       };
     }
   }

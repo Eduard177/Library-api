@@ -1,175 +1,117 @@
 {
-    "swagger": "2.0",
-    "info": {
-      "version": "1.0.0",
-      "title": "Library Api",
-      "description": "It is a Rest api for reading books.",
-      "license": {
-        "name": "MIT",
-        "url": "https://opensource.org/licenses/MIT"
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Library Api",
+    "description": "It is a Rest api for reading books.",
+    "license": { "name": "MIT", "url": "https://opensource.org/licenses/MIT" }
+  },
+  "host": "",
+  "basePath": "/api/book",
+  "tags": [{ "name": "Books", "description": "API for books in the system" }],
+  "paths": {
+    "/create": {
+      "post": {
+        "tags": ["Books"],
+        "summary": "Create book",
+        "parameters": [
+          {
+            "name": "bookId",
+            "in": "body",
+            "description": "Book that we want to get",
+            "schema": {
+              "properties": {
+                "title": { "type": "string", "required": true },
+                "author": { "type": "string", "required": true }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created the book",
+            "schema": { "$ref": "#/definitions/Book" }
+          }
+        }
       }
     },
-    "host": "localhost:3000",
-    "basePath": "/api/book",
-    "tags": [
-      {
-        "name": "Books",
-        "description": "API for books in the system"
+    "/all": {
+      "get": {
+        "tags": ["Books"],
+        "summary": "Get all books",
+        "responses": { "200": { "description": "Get All" } }
       }
-    ],
-    "paths": {
-        "/create": {
-          "post": {
-            "tags": ["Books"],
-            "summary": "Create book",
-            "parameters": [
-              {
-                "name": "bookId",
-                "in": "body",
-                "description": "Book that we want to get",
-                "schema": {
-                  "properties": {
-                    "title": {
-                      "type": "string",
-                      "required": true
-                    },
-                    "author": {
-                      "type": "string",
-                      "required": true
-                    }
-                  }
-                }
-              }
-            ],
-            "responses": {
-              "201": {
-                "description": "Created the book",
-                "schema": {
-                  "$ref": "#/definitions/Book"
-                }
-              }
-            }
+    },
+    "/{bookId}": {
+      "get": {
+        "tags": ["Books"],
+        "summary": "Get book by Id",
+        "parameters": [
+          {
+            "name": "bookId",
+            "in": "path",
+            "description": "Book that we want to get"
+          }
+        ],
+        "responses": { "200": { "description": "Get Book" } }
+      }
+    },
+    "/create/page/{bookId}": {
+      "post": {
+        "tags": ["Books"],
+        "summary": "Add page in book",
+        "parameters": [
+          {
+            "name": "bookId",
+            "in": "path",
+            "description": "Search book to add page"
+          },
+          {
+            "name": "content",
+            "in": "body",
+            "description": "Content in the page",
+            "schema": { "$ref": "#/definitions/Page" }
+          }
+        ],
+        "responses": { "201": { "description": "Create Page in the book" } }
+      }
+    },
+    "/{bookId}/page/{pageNumber}": {
+      "get": {
+        "tags": ["Books"],
+        "summary": "Get page in the book",
+        "parameters": [
+          {
+            "name": "bookId",
+            "in": "path",
+            "description": "Search book to search page"
+          },
+          { "name": "pageNumber", "in": "path", "description": "Search page" }
+        ],
+        "responses": { "200": { "description": "Create Page in the book" } }
+      }
+    }
+  },
+  "definitions": {
+    "Book": {
+      "properties": {
+        "pages": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": { "content": { "type": "string", "required": true } }
           }
         },
-        "/all": {
-          "get": {
-            "tags": ["Books"],
-            "summary": "Get all books",
-            "responses": {
-              "200": {
-                "description": "Get All"
-              }
-            }
-          }
-        },
-        "/{bookId}": {
-          "get": {
-            "tags": ["Books"],
-            "summary": "Get book by Id",
-            "parameters": [
-              {
-                "name": "bookId",
-                "in": "path",
-                "description": "Book that we want to get"
-              }
-            ],
-            "responses": {
-              "200": {
-                "description": "Get Book"
-              }
-            }
-          }
-        },
-        "/create/page/{bookId}": {
-          "post": {
-            "tags": ["Books"],
-            "summary": "Add page in book",
-            "parameters": [
-              {
-                "name": "bookId",
-                "in": "path",
-                "description": "Search book to add page" 
-              },
-              {
-                "name": "content",
-                "in": "body",
-                "description": "Content in the page",
-                "schema": {
-                  "$ref": "#/definitions/Page"
-                }
-              }
-            ],
-
-            "responses": {
-              "201": {
-                "description": "Create Page in the book"
-              }
-            }
-          }
-        },
-        "/{bookId}/page/{pageNumber}": {
-          "get": {
-            "tags": ["Books"],
-            "summary": "Get page in the book",
-            "parameters": [
-              {
-                "name": "bookId",
-                "in": "path",
-                "description": "Search book to search page" 
-              },
-              {
-                "name": "pageNumber",
-                "in": "path",
-                "description": "Search page"
-              }
-            ],
-
-            "responses": {
-              "200": {
-                "description": "Create Page in the book"
-              }
-            }
-          }
-        }
-    },"definitions": {
-        "Book": {
-          "properties": {
-            "pages": {
-              "type": "array",
-              "items": {
-                "type": "object",
-                "properties": {
-                  "content": {
-                    "type": "string",
-                    "required": true
-                  }
-                }
-              }
-            },
-            "_id": {
-              "type": "string",
-              "uniqueItems": true
-            },
-            "title": {
-              "type": "string",
-              "required": true
-            },
-            "author": {
-              "type": "string",
-              "required": true
-            }
-          }
-        },
-        "Page": {
-          "properties": {
-            "content" : {
-              "type":"string",
-              "required": true
-            }
-          }
-        }
-      },
-    "schemes": ["http"],
-    "consumes": ["application/json"],
-    "produces": ["application/json"]
+        "_id": { "type": "string", "uniqueItems": true },
+        "title": { "type": "string", "required": true },
+        "author": { "type": "string", "required": true }
+      }
+    },
+    "Page": {
+      "properties": { "content": { "type": "string", "required": true } }
+    }
+  },
+  "schemes": ["http", "https"],
+  "consumes": ["application/json"],
+  "produces": ["application/json"]
 }
