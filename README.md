@@ -26,6 +26,9 @@ _Now we can start the project_
 npm run start
 ```
 
+* **Cloud version for testing purposes** -[LibraryApi](https://library-api-eduard.herokuapp.com/api-docs/)
+
+
 ## Built with 🛠️
 
 * [JavaScript](https://www.javascript.com/)
